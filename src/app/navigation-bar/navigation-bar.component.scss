@@ -1,0 +1,31 @@
+$primary-color: #3498db; 
+$hover-color: darken($primary-color, 10%); 
+$text-color: #ffffff; 
+$active-color: lighten($primary-color, 10%); 
+
+.nav {
+    background-color: $primary-color;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    
+    .nav-item {
+        color: $text-color;
+        text-decoration: none;
+        margin: 0 15px;
+        font-size: 18px;
+        transition: color 0.3s;
+
+        &:hover {
+            color: $hover-color;
+        }
+
+        &.active {
+            color: $active-color; 
+            font-weight: bold; 
+        }
+    }
+}
+
