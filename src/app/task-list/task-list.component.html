@@ -35,7 +35,7 @@
         <input type="email" formControlName="email">
         <div *ngIf="email?.invalid && (email?.dirty || email?.touched)" class="error-message">
           <span *ngIf="email?.errors?.['required']">Обязательное поле</span>
-          <span *ngIf="email?.errors?.['email']">Некорректный email</span>
+          <span *ngIf="email?.errors?.['email']">Некорректный  email</span>
         </div>
       </div>
 
