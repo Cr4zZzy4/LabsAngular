@@ -1,0 +1,69 @@
+<div class="container">
+  <div *ngIf="!isLoggedIn" class="auth-form">
+    <h2>Авторизация</h2>
+    <form [formGroup]="authForm" (ngSubmit)="login()">
+      <div class="form-group" [class.invalid]="fullName?.invalid && (fullName?.dirty || fullName?.touched)">
+        <label>ФИО</label>
+        <input type="text" formControlName="fullName">
+        <div *ngIf="fullName?.invalid && (fullName?.dirty || fullName?.touched)" class="error-message">
+          <span *ngIf="fullName?.errors?.['required']">Обязательное поле</span>
+          <span *ngIf="fullName?.errors?.['minlength']">Минимум 3 символа</span>
+          <span *ngIf="fullName?.errors?.['pattern']">Только буквы и пробелы</span>
+        </div>
+      </div>
+
+      <div class="form-group" [class.invalid]="phone?.invalid && (phone?.dirty || phone?.touched)">
+        <label>Телефон</label>
+        <input type="tel" formControlName="phone" placeholder="+7 (999) 123-4567">
+        <div *ngIf="phone?.invalid && (phone?.dirty || phone?.touched)" class="error-message">
+          <span *ngIf="phone?.errors?.['required']">Обязательное поле</span>
+          <span *ngIf="phone?.errors?.['pattern']">Некорректный формат</span>
+        </div>
+      </div>
+
+      <div class="form-group" [class.invalid]="birthDate?.invalid && (birthDate?.dirty || birthDate?.touched)">
+        <label>Дата рождения</label>
+        <input type="date" formControlName="birthDate">
+        <div *ngIf="birthDate?.invalid && (birthDate?.dirty || birthDate?.touched)" class="error-message">
+          <span *ngIf="birthDate?.errors?.['required']">Обязательное поле</span>
+          <span *ngIf="birthDate?.errors?.['invalidDate']">Возраст должен быть 12-100 лет</span>
+        </div>
+      </div>
+
+      <div class="form-group" [class.invalid]="email?.invalid && (email?.dirty || email?.touched)">
+        <label>Email</label>
+        <input type="email" formControlName="email">
+        <div *ngIf="email?.invalid && (email?.dirty || email?.touched)" class="error-message">
+          <span *ngIf="email?.errors?.['required']">Обязательное поле</span>
+          <span *ngIf="email?.errors?.['email']">Некорректный email</span>
+        </div>
+      </div>
+
+      <div class="form-group" [class.invalid]="password?.invalid && (password?.dirty || password?.touched)">
+        <label>Пароль</label>
+        <input type="password" formControlName="password">
+        <div *ngIf="password?.invalid && (password?.dirty || password?.touched)" class="error-message">
+          <span *ngIf="password?.errors?.['required']">Обязательное поле</span>
+          <span *ngIf="password?.errors?.['minlength']">Минимум 6 символов</span>
+          <span *ngIf="password?.errors?.['maxlength']">Максимум 20 символов</span>
+        </div>
+      </div>
+
+      <button type="submit" [disabled]="authForm.invalid" class="submit-btn">Войти</button>
+    </form>
+  </div>
+
+  <div *ngIf="isLoggedIn" class="content">
+    <button (click)="logout()" class="logout-btn">Выйти</button>
+    
+    <div class="task-list">
+      <app-task-item
+        *ngFor="let task of tasks"
+        [title]="task.title"
+        [description]="task.description"
+        [difficulty]="task.difficulty"
+        [comments]="task.comments">
+      </app-task-item>
+    </div>
+  </div>
+</div>

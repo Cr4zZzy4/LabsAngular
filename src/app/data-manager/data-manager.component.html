@@ -1,0 +1,28 @@
+<div class="container">
+  <h2>Менеджер Данных</h2>
+
+  <button (click)="loadData()">Загрузить данные</button>
+
+  <div *ngIf="isLoading">Загрузка...</div>
+
+  <ul *ngIf="!isLoading">
+    <li *ngFor="let item of dataList">
+      <strong>{{ item.title }}</strong> - {{ item.description }}
+      <button (click)="deleteData(item.id!)">Удалить</button>
+    </li>
+  </ul>
+
+  <h3>Добавить новый элемент</h3>
+  <form (ngSubmit)="addData()">
+    <label>
+      Название:
+      <input [(ngModel)]="newData.title" name="title">
+    </label>
+    <label>
+      Описание:
+      <input [(ngModel)]="newData.description" name="description">
+    </label>
+    <button type="submit">Добавить</button>
+  </form>
+</div>
+

@@ -1,0 +1,97 @@
+<div class="task-item-container">
+  <h2>{{ title }}</h2>
+  <p>{{ description }}</p>
+  <span>Сложность:</span>
+  <span [ngSwitch]="difficulty">
+    <span *ngSwitchCase="'easy'">🟢 Легко</span>
+    <span *ngSwitchCase="'medium'">🟡 Средне</span>
+    <span *ngSwitchCase="'hard'">🔴 Сложно</span>
+    <span *ngSwitchDefault>⚪ Неизвестно</span>
+  </span>
+
+  <div class="comments">
+    <h3>Комментарии:</h3>
+    <ul>
+      <li *ngFor="let comment of comments">{{ comment }}</li>
+    </ul>
+  </div>
+
+  <form (ngSubmit)="addComment()" #commentForm="ngForm">
+    <h3>Оставить комментарий</h3>
+
+    <div class="form-group" [class.invalid]="userName.length < 2">
+      <label>Имя</label>
+      <input
+        type="text"
+        [(ngModel)]="userName"
+        name="userName"
+        required
+        minlength="2" />
+      <div class="error-message" *ngIf="userName.length > 0 && userName.length < 2">
+        Минимум 2 символа
+      </div>
+    </div>
+
+    <div class="form-group" [class.invalid]="!newComment.trim()">
+      <label>Комментарий</label>
+      <textarea
+        [(ngModel)]="newComment"
+        name="newComment"
+        required>
+      </textarea>
+      <div class="error-message" *ngIf="!newComment.trim()">Обязательное поле</div>
+    </div>
+
+    <div class="form-group" [class.invalid]="rating === null || rating < 1 || rating > 5">
+      <label>Оценка (1–5)</label>
+      <input
+        type="number"
+        [(ngModel)]="rating"
+        name="rating"
+        min="1"
+        max="5"
+        required />
+      <div class="error-message" *ngIf="rating !== null && (rating < 1 || rating > 5)">
+        Введите число от 1 до 5
+      </div>
+    </div>
+
+    <div class="form-group" [class.invalid]="!isEmailValid">
+      <label>Email</label>
+      <input
+        type="email"
+        [(ngModel)]="email"
+        name="email"
+        required
+        (blur)="validateEmail()" />
+      <div class="error-message" *ngIf="!isEmailValid">Некорректный email</div>
+    </div>
+
+    <div class="form-group" [class.invalid]="!isPhoneValid">
+      <label>Телефон</label>
+      <input
+        type="tel"
+        [(ngModel)]="phone"
+        name="phone"
+        required
+        (blur)="validatePhone()" />
+      <div class="error-message" *ngIf="!isPhoneValid">Некорректный номер</div>
+    </div>
+
+    <div class="form-group" [class.invalid]="!birthDate">
+      <label>Дата рождения</label>
+      <input
+        type="date"
+        [(ngModel)]="birthDate"
+        name="birthDate"
+        required />
+      <div class="error-message" *ngIf="!birthDate">Обязательное поле</div>
+    </div>
+
+    <button type="submit" [disabled]="commentForm.invalid" class="add-comment-btn">
+      Добавить комментарий
+    </button>
+  </form>
+</div>
+
+
